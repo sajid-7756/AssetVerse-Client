@@ -1,17 +1,14 @@
-import { Link, Navigate, useLocation, useNavigate } from "react-router";
+import { Navigate, useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
-import { TbFidgetSpinner } from "react-icons/tb";
 
 const Login = () => {
-  const { signIn, loading, user } = useAuth();
+  const { signIn, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state || "/";
 
-  if (loading) return <LoadingSpinner />;
   if (user) return <Navigate to={from} replace={true} />;
 
   // form submit handler
@@ -86,11 +83,7 @@ const Login = () => {
               type="submit"
               className="bg-lime-500 w-full rounded-md py-3 text-white"
             >
-              {loading ? (
-                <TbFidgetSpinner className="animate-spin m-auto" />
-              ) : (
-                "Continue"
-              )}
+              Continue
             </button>
           </div>
         </form>
