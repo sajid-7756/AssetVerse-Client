@@ -27,8 +27,8 @@ const JoinAsEmployee = () => {
       console.log(imageURL);
 
       // Create User
-      const { user } = await createUser(data?.email, data?.password);
-      console.log("Employee =>", user);
+      const result = await createUser(data?.email, data?.password);
+      console.log("Employee =>", result);
 
       // Update User
       await updateUserProfile(data?.name, imageURL);

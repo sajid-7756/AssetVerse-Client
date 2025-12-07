@@ -1,9 +1,11 @@
 import Container from "../Container";
 import { Link } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import useRole from "../../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const { role } = useRole();
 
   const links = (
     <>
@@ -15,6 +17,45 @@ const Navbar = () => {
       </li>
       <li>
         <Link to={"/join-as-hr"}>Join as HR</Link>
+      </li>
+    </>
+  );
+
+  const dropdowns = (
+    <>
+      {role === "employee" ? (
+        <>
+          <li>
+            <Link to="/my-asset">My Assets</Link>
+          </li>
+          <li>
+            <Link to="/my-team">My Team</Link>
+          </li>
+          <li>
+            <Link to="/request-asset">Request Asset</Link>
+          </li>
+        </>
+      ) : role === "hr" ? (
+        <>
+          <li>
+            <Link to="/asset-list">Asset List</Link>
+          </li>
+          <li>
+            <Link to="/add-asset">Add Asset</Link>
+          </li>
+          <li>
+            <Link to="/all-requests">All Requests</Link>
+          </li>
+          <li>
+            <Link to="/employee-list">Asset List</Link>
+          </li>
+        </>
+      ) : null}
+      <li>
+        <Link to="/profile">Profile</Link>
+      </li>
+      <li>
+        <button onClick={logOut}>Logout</button>
       </li>
     </>
   );
@@ -70,12 +111,7 @@ const Navbar = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52"
               >
-                <li>
-                  <Link to="/profile">Profile</Link>
-                </li>
-                <li>
-                  <button onClick={logOut}>Logout</button>
-                </li>
+                {dropdowns}
               </ul>
             </div>
           ) : (

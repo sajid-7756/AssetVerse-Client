@@ -1,9 +1,14 @@
 import React, { useRef } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useRole from "../../../hooks/useRole";
+import LoadingSpinner from "../LoadingSpinner";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Profile = () => {
   const { user, updateUserProfile } = useAuth();
+  const { role, isRoleLoading } = useRole();
+  const axiosSecure = useAxiosSecure();
   const modalRef = useRef(null);
 
   const handleUpdateProfile = async (e) => {
@@ -13,6 +18,8 @@ const Profile = () => {
 
     try {
       await updateUserProfile(name, photoURL);
+
+      await axiosSecure.patch("/user", { name });
       toast.success("Profile updated successfully 🎉");
 
       // Close modal programmatically
@@ -25,6 +32,8 @@ const Profile = () => {
     }
   };
 
+  if (isRoleLoading) return <LoadingSpinner />;
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="bg-white shadow-lg rounded-2xl md:w-4/5 lg:w-3/5">
@@ -36,7 +45,7 @@ const Profile = () => {
             className="mx-auto object-cover rounded-full h-24 w-24 border-2 border-white"
           />
           <p className="p-2 px-4 text-xs text-white bg-lime-500 rounded-full">
-            role
+            {role}
           </p>
           <p className="mt-2 text-xl font-medium text-gray-800">
             User Id: {user?.uid}
