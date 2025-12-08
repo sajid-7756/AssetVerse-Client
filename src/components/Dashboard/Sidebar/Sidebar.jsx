@@ -1,104 +1,102 @@
-import { useState } from 'react'
-import { Link } from 'react-router'
-import useAuth from '../../../hooks/useAuth'
-// import logo from '../../../assets/images/logo-flat.png'
-// Icons
-import { GrLogout } from 'react-icons/gr'
-import { FcSettings } from 'react-icons/fc'
-import { AiOutlineBars } from 'react-icons/ai'
-import { BsGraphUp } from 'react-icons/bs'
-
-// User Menu
-import MenuItem from './Menu/MenuItem'
-import AdminMenu from './Menu/AdminMenu'
-import SellerMenu from './Menu/SellerMenu'
-import CustomerMenu from './Menu/CustomerMenu'
-
 const Sidebar = () => {
-  const { logOut } = useAuth()
-  const [isActive, setActive] = useState(false)
-
-  // Sidebar Responsive Handler
-  const handleToggle = () => {
-    setActive(!isActive)
-  }
-
   return (
     <>
-      {/* Small Screen Navbar, only visible till md breakpoint */}
-      <div className='bg-gray-100 text-gray-800 flex justify-between md:hidden'>
-        <div>
-          <div className='block cursor-pointer p-4 font-bold'>
-            <Link to='/'>
-              {/* <img src={logo} alt='logo' width='100' height='100' /> */}
-            </Link>
-          </div>
+      <div className="drawer lg:drawer-open">
+        <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content">
+          {/* Navbar */}
+          <nav className="navbar w-full bg-base-300">
+            <label
+              htmlFor="my-drawer-4"
+              aria-label="open sidebar"
+              className="btn btn-square btn-ghost"
+            >
+              {/* Sidebar toggle icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2"
+                fill="none"
+                stroke="currentColor"
+                className="my-1.5 inline-block size-4"
+              >
+                <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+                <path d="M9 4v16"></path>
+                <path d="M14 10l2 2l-2 2"></path>
+              </svg>
+            </label>
+            <div className="px-4">Navbar Title</div>
+          </nav>
+          {/* Page content here */}
+          <div className="p-4">Page Content</div>
         </div>
 
-        <button
-          onClick={handleToggle}
-          className='mobile-menu-button p-4 focus:outline-none focus:bg-gray-200'
-        >
-          <AiOutlineBars className='h-5 w-5' />
-        </button>
-      </div>
+        <div className="drawer-side is-drawer-close:overflow-visible">
+          <label
+            htmlFor="my-drawer-4"
+            aria-label="close sidebar"
+            className="drawer-overlay"
+          ></label>
+          <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+            {/* Sidebar content here */}
+            <ul className="menu w-full grow">
+              {/* List item */}
+              <li>
+                <button
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* Home icon */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    fill="none"
+                    stroke="currentColor"
+                    className="my-1.5 inline-block size-4"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  </svg>
+                  <span className="is-drawer-close:hidden">Homepage</span>
+                </button>
+              </li>
 
-      {/* Sidebar */}
-      <div
-        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
-          isActive && '-translate-x-full'
-        }  md:translate-x-0  transition duration-200 ease-in-out`}
-      >
-        <div className='flex flex-col h-full'>
-          {/* Top Content */}
-          <div>
-            {/* Logo */}
-            <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-lime-100 mx-auto'>
-              <Link to='/'>
-                {/* <img src={logo} alt='logo' width='100' height='100' /> */}
-              </Link>
-            </div>
-          </div>
-
-          {/* Middle Content */}
-          <div className='flex flex-col justify-between flex-1 mt-6'>
-            {/*  Menu Items */}
-            <nav>
-              {/* Common Menu */}
-              <MenuItem
-                icon={BsGraphUp}
-                label='Statistics'
-                address='/dashboard'
-              />
-              {/* Role-Based Menu */}
-              <CustomerMenu />
-              <SellerMenu />
-              <AdminMenu />
-            </nav>
-          </div>
-
-          {/* Bottom Content */}
-          <div>
-            <hr />
-
-            <MenuItem
-              icon={FcSettings}
-              label='Profile'
-              address='/dashboard/profile'
-            />
-            <button
-              onClick={logOut}
-              className='flex cursor-pointer w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'
-            >
-              <GrLogout className='w-5 h-5' />
-
-              <span className='mx-4 font-medium'>Logout</span>
-            </button>
+              {/* List item */}
+              <li>
+                <button
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Settings"
+                >
+                  {/* Settings icon */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    fill="none"
+                    stroke="currentColor"
+                    className="my-1.5 inline-block size-4"
+                  >
+                    <path d="M20 7h-9"></path>
+                    <path d="M14 17H5"></path>
+                    <circle cx="17" cy="17" r="3"></circle>
+                    <circle cx="7" cy="7" r="3"></circle>
+                  </svg>
+                  <span className="is-drawer-close:hidden">Settings</span>
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

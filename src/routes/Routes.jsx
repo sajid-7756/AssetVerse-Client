@@ -9,15 +9,17 @@ import { createBrowserRouter } from "react-router";
 import JoinAsEmployee from "../pages/Home/JoinAsEmployee/JoinAsEmployee";
 import JoinAsHR from "../pages/Home/JoinAsHR/JoinAsHR";
 import Profile from "../components/Shared/Profile/Profile";
-import MyAssets from "../pages/Employee/MyAssets";
+import MyAssets from "../pages/Dashboard/Employee/MyAssets";
 import EmployeeRoute from "./EmployeeRoute";
-import MyTeam from "../pages/Employee/MyTeam";
-import RequestAsset from "../pages/Employee/RequestAsset";
-import AssetList from "../pages/HR/AssetList";
+import MyTeam from "../pages/Dashboard/Employee/MyTeam";
+import RequestAsset from "../pages/Dashboard/Employee/RequestAsset";
+import AssetList from "../pages/Dashboard/HR/AssetList";
 import HRRoute from "./HRRoute";
-import AddAsset from "../pages/HR/AddAsset";
-import AllRequests from "../pages/HR/AllRequests";
-import EmployeeList from "../pages/HR/EmployeeList";
+import AddAsset from "../pages/Dashboard/HR/AddAsset";
+import AllRequests from "../pages/Dashboard/HR/AllRequests";
+import EmployeeList from "../pages/Dashboard/HR/EmployeeList";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import UpgradePackage from "../pages/Dashboard/HR/UpgradePackage";
 
 export const router = createBrowserRouter([
   {
@@ -37,70 +39,6 @@ export const router = createBrowserRouter([
         path: "/join-as-hr",
         element: <JoinAsHR />,
       },
-      {
-        path: "/my-asset",
-        element: (
-          <EmployeeRoute>
-            <MyAssets />
-          </EmployeeRoute>
-        ),
-      },
-      {
-        path: "/my-team",
-        element: (
-          <EmployeeRoute>
-            <MyTeam />
-          </EmployeeRoute>
-        ),
-      },
-      {
-        path: "/request-asset",
-        element: (
-          <EmployeeRoute>
-            <RequestAsset />
-          </EmployeeRoute>
-        ),
-      },
-      {
-        path: "/asset-list",
-        element: (
-          <HRRoute>
-            <AssetList />
-          </HRRoute>
-        ),
-      },
-      {
-        path: "/add-asset",
-        element: (
-          <HRRoute>
-            <AddAsset />
-          </HRRoute>
-        ),
-      },
-      {
-        path: "/all-requests",
-        element: (
-          <HRRoute>
-            <AllRequests />
-          </HRRoute>
-        ),
-      },
-      {
-        path: "/employee-list",
-        element: (
-          <HRRoute>
-            <EmployeeList />
-          </HRRoute>
-        ),
-      },
-      {
-        path: "/profile",
-        element: (
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        ),
-      },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <SignUp /> },
     ],
@@ -109,12 +47,105 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <PrivateRoute>
-        <DashboardLayout />
-      </PrivateRoute>
+      <>
+        <PrivateRoute>
+          <DashboardLayout />
+        </PrivateRoute>
+      </>
     ),
     children: [
-      //dashboard children
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
+      {
+        path: "/dashboard/my-asset",
+        element: (
+          <PrivateRoute>
+            <EmployeeRoute>
+              <MyAssets />
+            </EmployeeRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/my-team",
+        element: (
+          <PrivateRoute>
+            <EmployeeRoute>
+              <MyTeam />
+            </EmployeeRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/request-asset",
+        element: (
+          <PrivateRoute>
+            <EmployeeRoute>
+              <RequestAsset />
+            </EmployeeRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/asset-list",
+        element: (
+          <PrivateRoute>
+            <HRRoute>
+              <AssetList />
+            </HRRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-asset",
+        element: (
+          <PrivateRoute>
+            <HRRoute>
+              <AddAsset />
+            </HRRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-requests",
+        element: (
+          <PrivateRoute>
+            <HRRoute>
+              <AllRequests />
+            </HRRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/employee-list",
+        element: (
+          <PrivateRoute>
+            <HRRoute>
+              <EmployeeList />
+            </HRRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/upgrade-package",
+        element: (
+          <PrivateRoute>
+            <HRRoute>
+              <UpgradePackage />
+            </HRRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);
