@@ -5,13 +5,16 @@ import Features from "../../components/Home/Features/Features";
 import HowItWorks from "../../components/Home/HowItWorks/HowItWorks";
 import Package from "../../components/Home/Package/Package";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
+import HRRoute from "../../routes/HRRoute";
 
 const Home = () => {
   return (
     <div>
-      <Banner />  
+      <Banner />
       <About />
-      <Package />
+      <HRRoute>
+        <Package />
+      </HRRoute>
       <Features />
       <Testimonials />
       <HowItWorks />

@@ -12,12 +12,16 @@ const Navbar = () => {
       <li>
         <Link>Home</Link>
       </li>
-      <li>
-        <Link to={"/join-as-employee"}>Join as Employee</Link>
-      </li>
-      <li>
-        <Link to={"/join-as-hr"}>Join as HR</Link>
-      </li>
+      {!user && (
+        <>
+          <li>
+            <Link to={"/join-as-employee"}>Join as Employee</Link>
+          </li>
+          <li>
+            <Link to={"/join-as-hr"}>Join as HR</Link>
+          </li>
+        </>
+      )}
     </>
   );
 

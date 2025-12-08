@@ -1,11 +1,18 @@
-import React from 'react'
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Package = () => {
-  return (
-    <div>
-      package (dynamic)
-    </div>
-  )
-}
+  const axiosSecure = useAxiosSecure();
+  const { data: packages = [] } = useQuery({
+    queryKey: ["packages"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/packages");
+      return res.data;
+    },
+  });
 
-export default Package
+  console.log(packages);
+  return <div>package ({packages.length})</div>;
+};
+
+export default Package;
