@@ -2,35 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import AllRequestTableRow from "../../../components/Dashboard/TableRows/AllRequestTableRow";
 
 const AllRequests = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: allRequests = [] } = useQuery({
+  const { data: allRequests = [], refetch } = useQuery({
     queryKey: ["all-assetRequests"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/asset-requests/${user?.email}`);
       return res.data;
     },
   });
-
-  const {
-    approvalDate,
-    assetId,
-    assetName,
-    assetType,
-    companyName,
-    hrEmail,
-    note,
-    processedBy,
-    requestDate,
-    requestStatus,
-    requesterName,
-    _id,
-  } = allRequests;
-
-  console.log(allRequests);
 
   return (
     <div>
@@ -42,19 +26,18 @@ const AllRequests = () => {
           {/* head */}
           <thead>
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              <th>#</th>
+              <th>Employee</th>
+              <th>Asset</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
+            {allRequests.map((request, index) => (
+              <AllRequestTableRow key={request._id} index={index} request={request} refetch={refetch} />
+            ))}
           </tbody>
         </table>
       </div>

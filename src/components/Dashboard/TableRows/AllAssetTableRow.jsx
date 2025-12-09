@@ -46,7 +46,7 @@ const AllAssetTableRow = ({ asset, refetch }) => {
 
   const handleDeleteAsset = async () => {
     const res = await axiosSecure.delete(`/asset/${_id}`);
-    console.log(res);
+    console.log(res.data);
     refetch();
   };
 

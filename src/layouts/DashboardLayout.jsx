@@ -15,6 +15,8 @@ import { AiOutlineTeam } from "react-icons/ai";
 const DashboardLayout = () => {
   const { role, isRoleLoading } = useRole();
 
+  if (isRoleLoading) return <LoadingSpinner />;
+
   const employeeDashboardLinks = [
     { id: 1, name: "My Assets", path: "/dashboard/my-asset", icon: <FaBox /> },
     {
@@ -75,8 +77,6 @@ const DashboardLayout = () => {
       icon: <FaUser />,
     },
   ];
-
-  if (isRoleLoading) return <LoadingSpinner />;
 
   return (
     <div className="drawer lg:drawer-open">

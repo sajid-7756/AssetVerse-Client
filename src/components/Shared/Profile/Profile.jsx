@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import useRole from "../../../hooks/useRole";
@@ -10,6 +10,8 @@ const Profile = () => {
   const { role, isRoleLoading } = useRole();
   const axiosSecure = useAxiosSecure();
   const modalRef = useRef(null);
+
+  if (isRoleLoading) return <LoadingSpinner />;
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
@@ -31,8 +33,6 @@ const Profile = () => {
       toast.error(error.message || "Failed to update profile");
     }
   };
-
-  if (isRoleLoading) return <LoadingSpinner />;
 
   return (
     <div className="flex justify-center items-center h-screen">

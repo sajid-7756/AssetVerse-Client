@@ -35,6 +35,7 @@ const JoinAsEmployee = () => {
 
       // Auto-assign role
       const payload = {
+        profileImage: imageURL,
         name: data.name,
         email: data.email,
         dateOfBirth: data.dateOfBirth,

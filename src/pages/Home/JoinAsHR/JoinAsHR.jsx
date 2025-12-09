@@ -37,6 +37,7 @@ const JoinAsHR = () => {
       const payload = {
         name: data.name,
         companyName: data.companyName,
+        profileImage: ProfileImageURL,
         companyLogo: companyLogoURL,
         email: data.email,
         dateOfBirth: data.dateOfBirth,

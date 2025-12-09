@@ -3,9 +3,11 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import AllAssetTableRow from "../../../components/Dashboard/TableRows/AllAssetTableRow";
 import { useState } from "react";
 import AssetCard from "../../../components/Dashboard/AssetCards/AssetCard";
+import useAuth from "../../../hooks/useAuth";
 
 const RequestAsset = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const { data: allAssets = [], refetch } = useQuery({
     queryKey: ["all-assets"],
     queryFn: async () => {
@@ -26,11 +28,22 @@ const RequestAsset = () => {
   const filteredAvailableQuantityAssets = filteredAsset.filter((asset) => {
     return asset.availableQuantity > 0;
   });
-  const handleRequest = async (requestData) => {
-    console.log("Request created:", requestData);
+  const handleRequest = async (data) => {
+    const requestData = {
+      assetId: data.assetId,
+      assetName: data.assetName,
+      assetType: data.assetType,
+      companyName: data.companyName,
+      hrEmail: data.hrEmail,
+      note: data.note,
+      processedBy: data.processedBy,
+      requesterName: data.requesterName,
+      requesterEmail: user?.email,
+    };
 
     const res = await axiosSecure.post("/asset-requests", requestData);
     console.log(res.data);
+    refetch();
   };
   return (
     <>
