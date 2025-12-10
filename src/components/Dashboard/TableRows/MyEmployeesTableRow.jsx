@@ -1,7 +1,16 @@
 import React from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyEmployeesTableRow = ({ employee, index, refetch }) => {
+  const axiosSecure = useAxiosSecure();
+
   const { name, image, email, assetCount } = employee;
+
+  const handleRemoveEmployee = async (email) => {
+    const res = await axiosSecure.delete(`/my-employees/${email}`);
+    console.log(res.data);
+    refetch()
+  };
 
   return (
     <>
@@ -22,7 +31,12 @@ const MyEmployeesTableRow = ({ employee, index, refetch }) => {
         </td>
         <td>{assetCount}</td>
         <th>
-          <button className="btn btn-ghost">details</button>
+          <button
+            onClick={() => handleRemoveEmployee(email)}
+            className="btn btn-outline btn-error"
+          >
+            Remove From Team
+          </button>
         </th>
       </tr>
     </>
