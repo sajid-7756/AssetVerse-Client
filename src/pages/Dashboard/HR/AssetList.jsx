@@ -2,13 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import AllAssetTableRow from "../../../components/Dashboard/TableRows/AllAssetTableRow";
 import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
 
 const AssetList = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: allAssets = [], refetch } = useQuery({
     queryKey: ["all-assets"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/assets");
+      const res = await axiosSecure.get(`/company-assets/${user?.email}`);
       return res.data;
     },
   });

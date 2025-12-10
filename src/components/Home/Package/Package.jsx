@@ -12,7 +12,12 @@ const Package = () => {
   });
 
   console.log(packages);
-  return <div>package ({packages.length})</div>;
+  return (
+    <div>
+      <h3>package ({packages.length})</h3>
+
+    </div>
+  );
 };
 
 export default Package;

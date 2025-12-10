@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
 const AllAssetTableRow = ({ asset, refetch }) => {
   const [open, setOpen] = useState(false);
+  const [openAssignModal, setOpenAssignModal] = useState(false);
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const { data: myEmployees = [] } = useQuery({
+    queryKey: ["my-employees", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/my-employees/${user?.email}`);
+      return res.data;
+    },
+  });
+
+  console.log(myEmployees);
 
   const {
     availableQuantity,
@@ -18,7 +31,6 @@ const AllAssetTableRow = ({ asset, refetch }) => {
     _id,
   } = asset;
 
-  // react-hook-form setup
   const { register, handleSubmit, reset } = useForm({
     defaultValues: asset,
   });
@@ -48,6 +60,43 @@ const AllAssetTableRow = ({ asset, refetch }) => {
     const res = await axiosSecure.delete(`/asset/${_id}`);
     console.log(res.data);
     refetch();
+  };
+
+  const handleAssignAsset = () => {
+    setOpenAssignModal(true);
+  };
+
+  const handleAssignToEmployee = async (employee) => {
+    try {
+      const assignmentData = {
+        assetId: _id,
+        assetName: productName,
+        assetImage: productImage,
+        assetType: productType,
+        employeeEmail: employee.email,
+        employeeName: employee.name,
+        hrEmail: user?.email,
+        companyName: companyName,
+        assignmentDate: new Date().toISOString(),
+        returnDate: null,
+        status: "assigned",
+      };
+
+      await axiosSecure.post("/assigned-assets", assignmentData);
+      
+      // Update asset quantity
+      const updatedAsset = {
+        availableQuantity: availableQuantity - 1,
+      };
+      await axiosSecure.patch(`/assets/${_id}`, updatedAsset);
+
+      refetch();
+      setOpenAssignModal(false);
+      alert(`Asset assigned to ${employee.name} successfully!`);
+    } catch (error) {
+      console.error("Assignment error:", error);
+      alert("Failed to assign asset");
+    }
   };
 
   return (
@@ -109,6 +158,12 @@ const AllAssetTableRow = ({ asset, refetch }) => {
               className="btn btn-outline btn-error"
             >
               Delete
+            </button>
+            <button
+              onClick={handleAssignAsset}
+              className="btn btn-outline btn-dash"
+            >
+              Assign
             </button>
           </div>
         </th>
@@ -217,6 +272,75 @@ const AllAssetTableRow = ({ asset, refetch }) => {
               </div>
             </form>
           </div>
+        </dialog>
+      )}
+      {openAssignModal && (
+        <dialog open className="modal">
+          <div className="modal-box max-w-2xl">
+            <h3 className="font-bold text-lg mb-4">Assign "{productName}" to Employee</h3>
+            
+            {myEmployees.length === 0 ? (
+              <p className="text-center text-gray-500 py-8">No employees found in your company</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="table table-zebra">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Current Assets</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {myEmployees.map((employee, index) => (
+                      <tr key={employee.email}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <div className="flex items-center gap-3">
+                            <div className="avatar">
+                              <div className="mask mask-squircle h-10 w-10">
+                                <img 
+                                  src={employee.image || "https://via.placeholder.com/40"} 
+                                  alt={employee.name} 
+                                />
+                              </div>
+                            </div>
+                            <span className="font-bold">{employee.name}</span>
+                          </div>
+                        </td>
+                        <td>{employee.email}</td>
+                        <td>
+                          <span className="badge badge-sm">{employee.assetCount || 0}</span>
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => handleAssignToEmployee(employee)}
+                            className="btn btn-sm btn-primary"
+                          >
+                            Assign
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div className="modal-action mt-6">
+              <button
+                onClick={() => setOpenAssignModal(false)}
+                className="btn"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button onClick={() => setOpenAssignModal(false)}>close</button>
+          </form>
         </dialog>
       )}
     </>

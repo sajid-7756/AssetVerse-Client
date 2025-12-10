@@ -13,7 +13,7 @@ const Profile = () => {
   const modalRef = useRef(null);
 
   const { data: myCompanyNames = [] } = useQuery({
-    enabled: !!user?.email,
+    enabled: !!user?.email && role === "employee",
     queryKey: ["my-companies", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/my-companies/${user?.email}`);
