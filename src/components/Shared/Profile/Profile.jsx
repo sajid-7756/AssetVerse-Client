@@ -4,12 +4,22 @@ import toast from "react-hot-toast";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../LoadingSpinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const Profile = () => {
   const { user, updateUserProfile } = useAuth();
   const { role, isRoleLoading } = useRole();
   const axiosSecure = useAxiosSecure();
   const modalRef = useRef(null);
+
+  const { data: myCompanyNames = [] } = useQuery({
+    enabled: !!user?.email,
+    queryKey: ["my-companies", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/my-companies/${user?.email}`);
+      return res.data;
+    },
+  });
 
   if (isRoleLoading) return <LoadingSpinner />;
 
@@ -71,12 +81,31 @@ const Profile = () => {
                 >
                   Update Profile
                 </button>
-                <button className="bg-lime-500 px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-lime-800">
-                  Change Password
-                </button>
               </div>
             </div>
           </div>
+          {role === "employee" && (
+            <div className="my-8 p-6 bg-white shadow-md rounded-lg">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span className="inline-block w-2 h-8 bg-blue-500 rounded"></span>
+                Current Company Affiliations
+              </h3>
+              <hr className="mb-4 border-gray-300" />
+              <ul className="space-y-2">
+                {myCompanyNames.map((company, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-3 p-2 rounded-md hover:bg-blue-50 transition"
+                  >
+                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                    <span className="text-gray-700 font-medium">
+                      {company.companyName}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 

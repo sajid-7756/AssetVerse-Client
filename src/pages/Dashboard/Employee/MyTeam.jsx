@@ -60,7 +60,7 @@ const MyTeam = () => {
           <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
+              <th>Member</th>
               <th>Position</th>
               <th>Upcoming Birthday</th>
             </tr>

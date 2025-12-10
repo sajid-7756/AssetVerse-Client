@@ -2,6 +2,9 @@ import { format } from "date-fns";
 
 const MyTeamTableRow = ({ member, index }) => {
   const { name, email, photo, position, upcomingBirthday } = member;
+
+  const currentMonth = new Date().getMonth();
+
   return (
     <>
       <tr>
@@ -20,7 +23,10 @@ const MyTeamTableRow = ({ member, index }) => {
           </div>
         </td>
         <td>{position}</td>
-        <td>{format(new Date(upcomingBirthday), "MMM d")}</td>
+        <td>
+          {new Date(upcomingBirthday).getMonth() === currentMonth &&
+            format(new Date(upcomingBirthday), "MMM d")}
+        </td>
       </tr>
     </>
   );
