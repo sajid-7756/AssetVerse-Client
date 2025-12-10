@@ -40,6 +40,7 @@ const AllRequestTableRow = ({ request, index, refetch }) => {
       `/reject-employee-requests/${request?._id}`,
       rejectRequest
     );
+    refetch();
     console.log(res.data);
   };
 

@@ -19,6 +19,7 @@ import AllRequests from "../pages/Dashboard/HR/AllRequests";
 import EmployeeList from "../pages/Dashboard/HR/EmployeeList";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import UpgradePackage from "../pages/Dashboard/HR/UpgradePackage";
+import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -141,6 +142,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/payment-success",
+        element: (
+          <PrivateRoute>
+            <PaymentSuccess />
           </PrivateRoute>
         ),
       },

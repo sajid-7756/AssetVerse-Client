@@ -82,20 +82,27 @@ const AllAssetTableRow = ({ asset, refetch }) => {
         status: "assigned",
       };
 
-      await axiosSecure.post("/assigned-assets", assignmentData);
-      
       // Update asset quantity
       const updatedAsset = {
         availableQuantity: availableQuantity - 1,
       };
-      await axiosSecure.patch(`/assets/${_id}`, updatedAsset);
+      const res = await axiosSecure.patch(`/assign-asset/${_id}`, updatedAsset);
+
+      const postAsset = await axiosSecure.post(
+        "/assigned-assets",
+        assignmentData
+      );
+
+      console.log(postAsset);
+
+      console.log(res.data);
 
       refetch();
       setOpenAssignModal(false);
       alert(`Asset assigned to ${employee.name} successfully!`);
     } catch (error) {
-      console.error("Assignment error:", error);
-      alert("Failed to assign asset");
+      console.error("Assignment error:", error.response.data.message);
+      alert(error.response.data.message);
     }
   };
 
@@ -277,10 +284,14 @@ const AllAssetTableRow = ({ asset, refetch }) => {
       {openAssignModal && (
         <dialog open className="modal">
           <div className="modal-box max-w-2xl">
-            <h3 className="font-bold text-lg mb-4">Assign "{productName}" to Employee</h3>
-            
+            <h3 className="font-bold text-lg mb-4">
+              Assign "{productName}" to Employee
+            </h3>
+
             {myEmployees.length === 0 ? (
-              <p className="text-center text-gray-500 py-8">No employees found in your company</p>
+              <p className="text-center text-gray-500 py-8">
+                No employees found in your company
+              </p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="table table-zebra">
@@ -301,9 +312,12 @@ const AllAssetTableRow = ({ asset, refetch }) => {
                           <div className="flex items-center gap-3">
                             <div className="avatar">
                               <div className="mask mask-squircle h-10 w-10">
-                                <img 
-                                  src={employee.image || "https://via.placeholder.com/40"} 
-                                  alt={employee.name} 
+                                <img
+                                  src={
+                                    employee.image ||
+                                    "https://via.placeholder.com/40"
+                                  }
+                                  alt={employee.name}
                                 />
                               </div>
                             </div>
@@ -312,7 +326,9 @@ const AllAssetTableRow = ({ asset, refetch }) => {
                         </td>
                         <td>{employee.email}</td>
                         <td>
-                          <span className="badge badge-sm">{employee.assetCount || 0}</span>
+                          <span className="badge badge-sm">
+                            {employee.assetCount || 0}
+                          </span>
                         </td>
                         <td>
                           <button
@@ -330,10 +346,7 @@ const AllAssetTableRow = ({ asset, refetch }) => {
             )}
 
             <div className="modal-action mt-6">
-              <button
-                onClick={() => setOpenAssignModal(false)}
-                className="btn"
-              >
+              <button onClick={() => setOpenAssignModal(false)} className="btn">
                 Close
               </button>
             </div>

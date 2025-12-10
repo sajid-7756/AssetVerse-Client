@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const UpgradePackage = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: packages = [] } = useQuery({
     queryKey: ["packages"],
@@ -12,7 +14,26 @@ const UpgradePackage = () => {
     },
   });
 
-  console.log(packages);
+  const handlePayment = async (p) => {
+    const paymentInfo = {
+      packageId: p._id,
+      name: p.name,
+      employeeLimit: p.employeeLimit,
+      price: p.price,
+      customer: {
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      },
+    };
+    const { data } = await axiosSecure.post(
+      "/create-checkout-session",
+      paymentInfo
+    );
+    console.log(data.url);
+    // eslint-disable-next-line react-hooks/immutability
+    window.location.href = data.url;
+  };
 
   return (
     <div className="my-10">
@@ -26,7 +47,7 @@ const UpgradePackage = () => {
             <div className="card-body">
               {/* Badge */}
               <span className="badge badge-warning badge-sm self-start mb-2">
-                Most Popular
+                Employee Limit: {p.employeeLimit}
               </span>
 
               {/* Header */}
@@ -60,7 +81,12 @@ const UpgradePackage = () => {
 
               {/* CTA */}
               <div className="mt-6">
-                <button className="btn btn-primary btn-block">Subscribe</button>
+                <button
+                  onClick={() => handlePayment(p)}
+                  className="btn btn-primary btn-block"
+                >
+                  Subscribe
+                </button>
               </div>
             </div>
           </div>
