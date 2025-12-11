@@ -5,20 +5,35 @@ import {
   FaLinkedinIn,
   FaInstagram,
   FaEnvelope,
+  FaArrowAltCircleUp,
 } from "react-icons/fa";
 import { Link } from "react-router";
 import Container from "../Container";
 
 const Footer = () => {
+  const handleUpBtn = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <footer className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <footer className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative">
       <Container className="py-16 px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-2xl font-bold mb-4 bg-linear-to-r from-lime-400 to-green-500 bg-clip-text text-transparent">
-              AssetVerse
-            </h3>
+            <div className="flex items-center gap-2 mb-4">
+              <img
+                src="/favicon.png"
+                alt="AssetVerse Logo"
+                className="w-8 h-8"
+              />
+              <h3 className="text-2xl font-bold bg-linear-to-r from-lime-400 to-green-500 bg-clip-text text-transparent">
+                AssetVerse
+              </h3>
+            </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Simplifying asset management for modern teams. Track, assign, and
               manage your company assets effortlessly.
@@ -176,6 +191,13 @@ const Footer = () => {
                 Cookies
               </a>
             </div>
+          </div>
+          <div
+            onClick={handleUpBtn}
+            className="absolute right-10
+           bottom-30 cursor-pointer"
+          >
+            <FaArrowAltCircleUp size={50} color="green" />
           </div>
         </Container>
       </div>

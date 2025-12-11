@@ -17,10 +17,21 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const { role } = useRole();
 
+  const handleUpBtn = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const links = (
     <>
       <li>
-        <Link to="/" className="flex items-center gap-2 hover:text-lime-500">
+        <Link
+          onClick={handleUpBtn}
+          to="/"
+          className="flex items-center gap-2 hover:text-lime-500"
+        >
           <FaHome size={16} />
           Home
         </Link>
@@ -160,10 +171,11 @@ const Navbar = () => {
             </ul>
           </div>
           <Link
+            onClick={handleUpBtn}
             to={"/"}
-            className="btn btn-ghost text-2xl font-bold bg-linear-to-r from-lime-500 to-green-600 text-white rounded-lg px-3"
+            className="btn btn-ghost text-2xl font-bold bg-linear-to-r from-lime-500 to-green-600 text-white rounded-lg px-3 gap-2"
           >
-            <FaBox size={24} />
+            <img src="/favicon.png" alt="AssetVerse Logo" className="w-8 h-8" />
             AssetVerse
           </Link>
         </div>
