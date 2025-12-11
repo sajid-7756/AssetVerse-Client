@@ -1,17 +1,18 @@
 import { Link } from "react-router";
 import { FaArrowRight, FaBox, FaUsers, FaChartLine } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
+import Container from "../../Shared/Container";
 
 const Banner = () => {
   const { user } = useAuth();
 
   return (
-    <section className="relative  py-12 md:py-16 overflow-hidden">
+    <section className="relative py-12 md:py-16 overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 right-0 w-72 md:w-96 h-72 md:h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
       <div className="absolute bottom-0 left-0 w-72 md:w-96 h-72 md:h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
 
-      <div className="container mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12 px-4 md:px-6 relative z-10">
+      <Container className="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
         {/* Left Content */}
         <div className="flex-1 text-center md:text-left">
           {/* Badge */}
@@ -109,7 +110,7 @@ const Banner = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Bottom CTA Bar */}
       {user && (

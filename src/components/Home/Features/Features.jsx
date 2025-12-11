@@ -7,6 +7,7 @@ import {
   FaShieldAlt,
   FaMobileAlt,
 } from "react-icons/fa";
+import Container from "../../Shared/Container";
 
 const Features = () => {
   const features = [
@@ -50,7 +51,7 @@ const Features = () => {
 
   return (
     <div className="py-16 md:py-24 px-4">
-      <div className="max-w-7xl mx-auto">
+      <Container className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-lime-100 text-lime-700 rounded-full font-bold text-sm mb-4">
@@ -89,7 +90,7 @@ const Features = () => {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

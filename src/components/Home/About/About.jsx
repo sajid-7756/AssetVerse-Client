@@ -5,6 +5,7 @@ import {
   FaChartLine,
   FaClock,
 } from "react-icons/fa";
+import Container from "../../Shared/Container";
 import aboutImg from "../../../assets/about-us.png";
 
 const About = () => {
@@ -37,13 +38,14 @@ const About = () => {
 
   return (
     <div className=" py-16 md:py-24 px-4">
-      <div className="max-w-7xl mx-auto">
+      <Container className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-lime-100 text-lime-700 rounded-full font-bold text-sm mb-4">
-            Why Choose AssetVerse
+            About AssetVerse
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-]
+          bold text-gray-900 leading-tight mb-4">
             Asset Management{" "}
             <span className="bg-linear-to-r from-lime-500 to-green-600 bg-clip-text text-transparent">
               Reimagined
@@ -134,7 +136,7 @@ const About = () => {
             </button>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };
