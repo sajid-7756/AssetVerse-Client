@@ -1,5 +1,10 @@
 import React from "react";
-import { FaCheckCircle, FaShieldAlt, FaChartLine, FaClock } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaShieldAlt,
+  FaChartLine,
+  FaClock,
+} from "react-icons/fa";
 import aboutImg from "../../../assets/about-us.png";
 
 const About = () => {
@@ -7,23 +12,27 @@ const About = () => {
     {
       icon: <FaCheckCircle className="text-2xl" />,
       title: "Complete Asset Tracking",
-      description: "Real-time visibility of all company assets with detailed history and audit trails"
+      description:
+        "Real-time visibility of all company assets with detailed history and audit trails",
     },
     {
       icon: <FaShieldAlt className="text-2xl" />,
       title: "Enhanced Security & Compliance",
-      description: "Maintain compliance standards with secure asset handover and verification processes"
+      description:
+        "Maintain compliance standards with secure asset handover and verification processes",
     },
     {
       icon: <FaChartLine className="text-2xl" />,
       title: "Data-Driven Insights",
-      description: "Analytics and reporting to optimize asset allocation and reduce operational costs"
+      description:
+        "Analytics and reporting to optimize asset allocation and reduce operational costs",
     },
     {
       icon: <FaClock className="text-2xl" />,
       title: "Streamlined Workflows",
-      description: "Automate request approvals and asset assignments to save time and reduce errors"
-    }
+      description:
+        "Automate request approvals and asset assignments to save time and reduce errors",
+    },
   ];
 
   return (
@@ -41,7 +50,9 @@ const About = () => {
             </span>
           </h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            AssetVerse empowers organizations to manage corporate assets efficiently, transparently, and securely—bridging the gap between HR and employees.
+            AssetVerse empowers organizations to manage corporate assets
+            efficiently, transparently, and securely—bridging the gap between HR
+            and employees.
           </p>
         </div>
 
@@ -50,7 +61,7 @@ const About = () => {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+              className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-lime-200 hover:-translate-y-1 group"
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-lime-100 rounded-lg text-lime-600 shrink-0">
@@ -84,26 +95,36 @@ const About = () => {
                 Trusted by Leading Organizations
               </h3>
               <p className="text-lg text-gray-700 leading-relaxed">
-                From startups to enterprises, organizations worldwide depend on AssetVerse to maintain control over their corporate assets while keeping employees informed and engaged.
+                From startups to enterprises, organizations worldwide depend on
+                AssetVerse to maintain control over their corporate assets while
+                keeping employees informed and engaged.
               </p>
             </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-linear-to-br from-lime-50 to-lime-100 rounded-xl p-6 border border-lime-200">
-                <div className="text-3xl font-bold text-lime-600 mb-1">10k+</div>
+                <div className="text-3xl font-bold text-lime-600 mb-1">
+                  10k+
+                </div>
                 <p className="text-sm text-gray-700">Assets Tracked</p>
               </div>
               <div className="bg-linear-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
-                <div className="text-3xl font-bold text-green-600 mb-1">500+</div>
+                <div className="text-3xl font-bold text-green-600 mb-1">
+                  500+
+                </div>
                 <p className="text-sm text-gray-700">Companies Trust Us</p>
               </div>
               <div className="bg-linear-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
-                <div className="text-3xl font-bold text-blue-600 mb-1">99.9%</div>
+                <div className="text-3xl font-bold text-blue-600 mb-1">
+                  99.9%
+                </div>
                 <p className="text-sm text-gray-700">Uptime SLA</p>
               </div>
               <div className="bg-linear-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
-                <div className="text-3xl font-bold text-purple-600 mb-1">24/7</div>
+                <div className="text-3xl font-bold text-purple-600 mb-1">
+                  24/7
+                </div>
                 <p className="text-sm text-gray-700">Support Available</p>
               </div>
             </div>
