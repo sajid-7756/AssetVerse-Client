@@ -37,15 +37,14 @@ const About = () => {
   ];
 
   return (
-    <div className=" py-16 md:py-24 px-4">
-      <Container className="max-w-7xl mx-auto">
+    <div className="py-16 md:py-24 px-4">
+      <Container>
         {/* Header Section */}
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-lime-100 text-lime-700 rounded-full font-bold text-sm mb-4">
             About AssetVerse
           </div>
-          <h2 className="text-4xl md:text-5xl font-]
-          bold text-gray-900 leading-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
             Asset Management{" "}
             <span className="bg-linear-to-r from-lime-500 to-green-600 bg-clip-text text-transparent">
               Reimagined

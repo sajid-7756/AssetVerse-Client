@@ -113,7 +113,7 @@ const Banner = () => {
       </Container>
 
       {/* Bottom CTA Bar */}
-      {user && (
+      {!user && (
         <div className="mt-10 md:mt-16 relative z-10">
           <div className="bg-linear-to-r from-lime-500 to-green-600 rounded-xl md:rounded-2xl p-6 md:p-8 text-center text-white mx-4 md:mx-6 shadow-xl">
             <h3 className="text-lg md:text-2xl font-bold mb-2">

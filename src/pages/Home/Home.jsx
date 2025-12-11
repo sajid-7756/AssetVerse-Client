@@ -4,9 +4,9 @@ import Contact from "../../components/Home/Contact/Contact";
 import FAQ from "../../components/Home/FAQ/FAQ";
 import Features from "../../components/Home/Features/Features";
 import HowItWorks from "../../components/Home/HowItWorks/HowItWorks";
-import Package from "../../components/Home/Package/Package";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import HRRoute from "../../routes/HRRoute";
+import UpgradePackage from "../Dashboard/HR/UpgradePackage";
 
 const Home = () => {
   return (
@@ -14,7 +14,7 @@ const Home = () => {
       <Banner />
       <About />
       <HRRoute>
-        <Package />
+        <UpgradePackage />
       </HRRoute>
       <Features />
       <Testimonials />
