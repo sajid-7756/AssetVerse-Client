@@ -1,5 +1,6 @@
-import { Link, Outlet } from "react-router";
+import { Link, NavLink, Outlet, useLocation } from "react-router";
 import useRole from "../hooks/useRole";
+import useAuth from "../hooks/useAuth";
 import LoadingSpinner from "../components/Shared/LoadingSpinner";
 import {
   FaBox,
@@ -8,34 +9,41 @@ import {
   FaPlusCircle,
   FaUser,
   FaArrowUp,
+  FaHome,
+  FaBars,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { MdOutlineRequestPage } from "react-icons/md";
 import { AiOutlineTeam } from "react-icons/ai";
+import { useState } from "react";
 
 const DashboardLayout = () => {
   const { role, isRoleLoading } = useRole();
+  const { user, logOut } = useAuth();
+  const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   if (isRoleLoading) return <LoadingSpinner />;
 
   const employeeDashboardLinks = [
-    { id: 1, name: "My Assets", path: "/dashboard/my-asset", icon: <FaBox /> },
+    { id: 1, name: "My Assets", path: "/dashboard/my-asset", icon: FaBox },
     {
       id: 2,
       name: "My Team",
       path: "/dashboard/my-team",
-      icon: <AiOutlineTeam />,
+      icon: AiOutlineTeam,
     },
     {
       id: 3,
       name: "Request Assets",
       path: "/dashboard/request-asset",
-      icon: <MdOutlineRequestPage />,
+      icon: MdOutlineRequestPage,
     },
     {
       id: 4,
       name: "Profile",
       path: "/dashboard/profile",
-      icon: <FaUser />,
+      icon: FaUser,
     },
   ];
 
@@ -44,139 +52,207 @@ const DashboardLayout = () => {
       id: 1,
       name: "Asset List",
       path: "/dashboard/asset-list",
-      icon: <FaClipboardList />,
+      icon: FaClipboardList,
     },
     {
       id: 2,
       name: "Add Asset",
       path: "/dashboard/add-asset",
-      icon: <FaPlusCircle />,
+      icon: FaPlusCircle,
     },
     {
       id: 3,
-      name: "All Request",
+      name: "All Requests",
       path: "/dashboard/all-requests",
-      icon: <FaClipboardList />,
+      icon: FaClipboardList,
     },
     {
       id: 4,
       name: "Employee List",
       path: "/dashboard/employee-list",
-      icon: <FaUsers />,
+      icon: FaUsers,
     },
     {
       id: 5,
       name: "Upgrade Package",
       path: "/dashboard/upgrade-package",
-      icon: <FaArrowUp />,
+      icon: FaArrowUp,
     },
     {
       id: 6,
       name: "Profile",
       path: "/dashboard/profile",
-      icon: <FaUser />,
+      icon: FaUser,
     },
   ];
 
-  return (
-    <div className="drawer lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
-          >
-            {/* Sidebar toggle icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
-              fill="none"
-              stroke="currentColor"
-              className="my-1.5 inline-block size-4"
-            >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
-          </label>
-          <div className="px-4">Navbar Title</div>
-        </nav>
-        {/* Page content here */}
-        <Outlet></Outlet>
-      </div>
+  const dashboardLinks =
+    role === "employee" ? employeeDashboardLinks : HRDashboardLinks;
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow">
-            {/* List item */}
+  const handleLogout = async () => {
+    await logOut();
+  };
+
+  return (
+    <div className="min-h-screen bg-lime-50">
+      {/* Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 z-40 h-screen transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 w-64 bg-white border-r-2 border-gray-200 shadow-xl`}
+      >
+        {/* Sidebar Header - Branding */}
+        <div className="h-20 flex items-center justify-center border-b-2 border-gray-100 bg-linear-to-r from-lime-500 to-green-600">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+              <FaBox className="text-lime-600 text-xl" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-white">AssetVerse</h1>
+              <p className="text-xs text-lime-100">Dashboard</p>
+            </div>
+          </Link>
+        </div>
+
+        {/* User Profile Section */}
+        <div className="p-4 border-b-2 border-gray-100 bg-lime-50">
+          <div className="flex items-center gap-3">
+            <div className="avatar">
+              <div className="w-12 h-12 rounded-full ring-2 ring-lime-500 ring-offset-2">
+                <img
+                  src={user?.photoURL || "https://via.placeholder.com/150"}
+                  alt={user?.displayName || "User"}
+                />
+              </div>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900 truncate">
+                {user?.displayName || "User"}
+              </p>
+              <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-lime-500 text-white">
+                {role === "hr" ? "HR Manager" : "Employee"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Links */}
+        <nav className="flex-1 overflow-y-auto p-4">
+          <ul className="space-y-2">
+            {/* Home Link */}
             <li>
-              <Link
-                to={"/"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                    isActive
+                      ? "bg-lime-500 text-white shadow-lg"
+                      : "text-gray-700 hover:bg-lime-100 hover:text-lime-700"
+                  }`
+                }
+                onClick={() => setIsSidebarOpen(false)}
               >
-                {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">Homepage</span>
-              </Link>
+                <FaHome className="text-lg" />
+                <span className="font-medium">Homepage</span>
+              </NavLink>
             </li>
 
-            {/* List item */}
-            {role === "employee"
-              ? employeeDashboardLinks.map((link) => (
-                  <li key={link.id}>
-                    <Link
-                      to={link.path}
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip={link.name}
-                    >
-                      {link.icon}
-                      <span className="is-drawer-close:hidden">
-                        {link.name}
-                      </span>
-                    </Link>
-                  </li>
-                ))
-              : HRDashboardLinks.map((link) => (
-                  <li key={link.id}>
-                    <Link
-                      to={link.path}
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip={link.name}
-                    >
-                      {link.icon}
-                      <span className="is-drawer-close:hidden">
-                        {link.name}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+            {/* Divider */}
+            <li className="pt-4 pb-2">
+              <p className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                {role === "hr" ? "HR Management" : "My Workspace"}
+              </p>
+            </li>
+
+            {/* Dashboard Links */}
+            {dashboardLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = location.pathname === link.path;
+              return (
+                <li key={link.id}>
+                  <NavLink
+                    to={link.path}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                      isActive
+                        ? "bg-lime-500 text-white shadow-lg"
+                        : "text-gray-700 hover:bg-lime-100 hover:text-lime-700"
+                    }`}
+                    onClick={() => setIsSidebarOpen(false)}
+                  >
+                    <Icon className="text-lg" />
+                    <span className="font-medium">{link.name}</span>
+                  </NavLink>
+                </li>
+              );
+            })}
           </ul>
+        </nav>
+
+        {/* Logout Button */}
+        <div className="p-4 border-t-2 border-gray-100">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-all duration-200"
+          >
+            <FaSignOutAlt className="text-lg" />
+            <span className="font-medium">Logout</span>
+          </button>
         </div>
+      </aside>
+
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
+      {/* Main Content */}
+      <div className="lg:ml-64">
+        {/* Navbar */}
+        <header className="sticky top-0 z-20 h-20 bg-white border-b-2 border-gray-200 shadow-sm">
+          <div className="h-full px-4 md:px-6 flex items-center justify-between">
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="lg:hidden btn btn-ghost btn-square text-gray-700"
+            >
+              <FaBars className="text-xl" />
+            </button>
+
+            {/* Page Title */}
+            <div className="flex-1 lg:flex-none">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+                {dashboardLinks.find((link) => link.path === location.pathname)
+                  ?.name || "Dashboard"}
+              </h2>
+            </div>
+
+            {/* Desktop User Info */}
+            <div className="hidden lg:flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-sm font-semibold text-gray-900">
+                  {user?.displayName || "User"}
+                </p>
+                <p className="text-xs text-gray-600">{user?.email}</p>
+              </div>
+              <div className="avatar">
+                <div className="w-10 h-10 rounded-full ring-2 ring-lime-500">
+                  <img
+                    src={user?.photoURL || "https://via.placeholder.com/150"}
+                    alt={user?.displayName || "User"}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Page Content */}
+        <main className="min-h-[calc(100vh-5rem)] p-4 md:p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
