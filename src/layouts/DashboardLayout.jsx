@@ -240,7 +240,7 @@ const DashboardLayout = () => {
               <div className="avatar">
                 <div className="w-10 h-10 rounded-full ring-2 ring-lime-500">
                   <img
-                    src={user?.photoURL || "https://via.placeholder.com/150"}
+                    src={user?.photoURL || "https://i.ibb.co.com/N2N3hH1k/icons8-user-48.png"}
                     alt={user?.displayName || "User"}
                   />
                 </div>
