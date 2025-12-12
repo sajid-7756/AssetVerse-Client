@@ -12,6 +12,7 @@ import {
   FaHome,
   FaBars,
   FaSignOutAlt,
+  FaChartBar,
 } from "react-icons/fa";
 import { MdOutlineRequestPage } from "react-icons/md";
 import { AiOutlineTeam } from "react-icons/ai";
@@ -48,6 +49,12 @@ const DashboardLayout = () => {
   ];
 
   const HRDashboardLinks = [
+    {
+      id: 1,
+      name: "Statistics",
+      path: "/dashboard",
+      icon: FaChartBar,
+    },
     {
       id: 1,
       name: "Asset List",

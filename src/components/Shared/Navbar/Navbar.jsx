@@ -37,7 +37,7 @@ const Navbar = () => {
           Home
         </Link>
       </li>
-      {!user && (
+      {!user ? (
         <>
           <li>
             <Link
@@ -55,6 +55,18 @@ const Navbar = () => {
             >
               <FaBox size={16} />
               Join as HR
+            </Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link
+              to={"/dashboard"}
+              className="flex items-center gap-2 hover:text-lime-500"
+            >
+              <FaBox size={16} />
+              Dashboard
             </Link>
           </li>
         </>
