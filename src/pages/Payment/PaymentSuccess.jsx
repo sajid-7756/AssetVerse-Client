@@ -27,7 +27,7 @@ const PaymentSuccess = () => {
           toast.error("Failed to verify payment. Please contact support.");
         });
     } else {
-      setLoading(false);
+      // setLoading(false);
     }
   }, [axiosSecure, sessionId]);
 
