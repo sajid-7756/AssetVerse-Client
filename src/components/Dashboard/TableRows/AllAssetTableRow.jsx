@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import { FaEdit, FaTrash, FaUserPlus } from "react-icons/fa";
 
 const AllAssetTableRow = ({ asset, refetch }) => {
   const [open, setOpen] = useState(false);
@@ -48,18 +50,85 @@ const AllAssetTableRow = ({ asset, refetch }) => {
       productType: data.productType,
     };
 
-    const res = await axiosSecure.patch(`/assets/${_id}`, assetData);
+    try {
+      const res = await axiosSecure.patch(`/assets/${_id}`, assetData);
 
-    refetch();
-    console.log(res.data);
-
-    setOpen(false);
+      if (res.data.modifiedCount) {
+        await Swal.fire({
+          title: "Updated!",
+          text: `${data.productName} has been updated successfully.`,
+          icon: "success",
+          confirmButtonColor: "#84cc16",
+          customClass: {
+            popup: "rounded-2xl",
+            confirmButton: "rounded-lg",
+          },
+        });
+        refetch();
+        setOpen(false);
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to update asset. Please try again.",
+        icon: "error",
+        confirmButtonColor: "#ef4444",
+        customClass: {
+          popup: "rounded-2xl",
+          confirmButton: "rounded-lg",
+        },
+      });
+    }
   };
 
   const handleDeleteAsset = async () => {
-    const res = await axiosSecure.delete(`/asset/${_id}`);
-    console.log(res.data);
-    refetch();
+    const result = await Swal.fire({
+      title: "Delete Asset?",
+      html: `Are you sure you want to delete <strong>${productName}</strong>?<br><br><small class="text-red-600">This action cannot be undone.</small>`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, Delete",
+      cancelButtonText: "Cancel",
+      customClass: {
+        popup: "rounded-2xl",
+        confirmButton: "rounded-lg",
+        cancelButton: "rounded-lg",
+      },
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await axiosSecure.delete(`/asset/${_id}`);
+        if (res.data.deletedCount) {
+          await Swal.fire({
+            title: "Deleted!",
+            text: `${productName} has been deleted.`,
+            icon: "success",
+            confirmButtonColor: "#84cc16",
+            customClass: {
+              popup: "rounded-2xl",
+              confirmButton: "rounded-lg",
+            },
+          });
+          refetch();
+        }
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete asset. Please try again.",
+          icon: "error",
+          confirmButtonColor: "#ef4444",
+          customClass: {
+            popup: "rounded-2xl",
+            confirmButton: "rounded-lg",
+          },
+        });
+      }
+    }
   };
 
   const handleAssignAsset = () => {
@@ -86,23 +155,37 @@ const AllAssetTableRow = ({ asset, refetch }) => {
       const updatedAsset = {
         availableQuantity: availableQuantity - 1,
       };
-      const res = await axiosSecure.patch(`/assign-asset/${_id}`, updatedAsset);
+      await axiosSecure.patch(`/assign-asset/${_id}`, updatedAsset);
 
-      const postAsset = await axiosSecure.post(
-        "/assigned-assets",
-        assignmentData
-      );
+      await axiosSecure.post("/assigned-assets", assignmentData);
 
-      console.log(postAsset);
-
-      console.log(res.data);
+      await Swal.fire({
+        title: "Assigned!",
+        text: `${productName} has been assigned to ${employee.name} successfully.`,
+        icon: "success",
+        confirmButtonColor: "#84cc16",
+        customClass: {
+          popup: "rounded-2xl",
+          confirmButton: "rounded-lg",
+        },
+      });
 
       refetch();
       setOpenAssignModal(false);
-      alert(`Asset assigned to ${employee.name} successfully!`);
     } catch (error) {
-      console.error("Assignment error:", error.response.data.message);
-      alert(error.response.data.message);
+      console.error("Assignment error:", error.response?.data?.message);
+      Swal.fire({
+        title: "Error!",
+        text:
+          error.response?.data?.message ||
+          "Failed to assign asset. Please try again.",
+        icon: "error",
+        confirmButtonColor: "#ef4444",
+        customClass: {
+          popup: "rounded-2xl",
+          confirmButton: "rounded-lg",
+        },
+      });
     }
   };
 
@@ -134,7 +217,7 @@ const AllAssetTableRow = ({ asset, refetch }) => {
         {/* Status */}
         <td>
           <span
-            className={`text-xs opacity-70 badge ${
+            className={`text-xs opacity-70 badge badge-outline ${
               productType === "Returnable" ? "badge-success" : "badge-error"
             }`}
           >
@@ -153,100 +236,120 @@ const AllAssetTableRow = ({ asset, refetch }) => {
 
         {/* Action Buttons */}
         <th>
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <button
               onClick={() => setOpen(true)}
-              className="btn btn-outline btn-warning"
+              className="btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white border-0"
+              title="Edit Asset"
             >
-              Edit
+              <FaEdit />
             </button>
             <button
               onClick={handleDeleteAsset}
-              className="btn btn-outline btn-error"
+              className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-0"
+              title="Delete Asset"
             >
-              Delete
+              <FaTrash />
             </button>
             <button
               onClick={handleAssignAsset}
-              className="btn btn-outline btn-dash"
+              className="btn btn-sm bg-lime-500 hover:bg-lime-600 text-white border-0"
+              title="Assign to Employee"
             >
-              Assign
+              <FaUserPlus />
             </button>
           </div>
         </th>
       </tr>
 
-      {/* DaisyUI Edit Modal */}
+      {/* Edit Modal */}
       {open && (
         <dialog open className="modal">
-          <div className="modal-box max-w-xl">
-            <h3 className="font-bold text-lg">Edit Asset</h3>
+          <div className="modal-box max-w-xl bg-white rounded-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-lime-500 rounded-lg flex items-center justify-center">
+                <FaEdit className="text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">Edit Asset</h3>
+            </div>
 
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
+              className="grid grid-cols-1 md:grid-cols-2 gap-5"
             >
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Product Name</span>
+                  <span className="label-text font-semibold text-gray-700">
+                    Product Name
+                  </span>
                 </label>
                 <input
                   {...register("productName", { required: true })}
-                  className="input input-bordered"
+                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all"
                 />
               </div>
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Company</span>
+                  <span className="label-text font-semibold text-gray-700">
+                    Company
+                  </span>
                 </label>
                 <input
                   readOnly
                   {...register("companyName", { required: true })}
-                  className="input input-bordered"
+                  className="input input-bordered w-full bg-gray-50"
                 />
               </div>
 
               <div className="form-control md:col-span-2">
                 <label className="label">
-                  <span className="label-text">Image URL</span>
+                  <span className="label-text font-semibold text-gray-700">
+                    Image URL
+                  </span>
                 </label>
                 <input
                   {...register("productImage")}
-                  className="input input-bordered"
+                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all"
                   type="url"
                 />
               </div>
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Available Quantity</span>
+                  <span className="label-text font-semibold text-gray-700">
+                    Available Quantity
+                  </span>
                 </label>
                 <input
                   {...register("availableQuantity", { valueAsNumber: true })}
-                  className="input input-bordered"
+                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all"
                   type="number"
                 />
               </div>
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Total Quantity</span>
+                  <span className="label-text font-semibold text-gray-700">
+                    Total Quantity
+                  </span>
                 </label>
                 <input
                   {...register("productQuantity", { valueAsNumber: true })}
-                  className="input input-bordered"
+                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all"
                   type="number"
                 />
               </div>
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Type</span>
+                  <span className="label-text font-semibold text-gray-700">
+                    Type
+                  </span>
                 </label>
                 <select
                   {...register("productType")}
-                  className="select select-bordered"
+                  className="select select-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all"
                 >
                   <option value="Returnable">Returnable</option>
                   <option value="Non-Returnable">Non-Returnable</option>
@@ -255,38 +358,51 @@ const AllAssetTableRow = ({ asset, refetch }) => {
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">HR Email</span>
+                  <span className="label-text font-semibold text-gray-700">
+                    HR Email
+                  </span>
                 </label>
                 <input
                   readOnly
                   {...register("hrEmail")}
-                  className="input input-bordered"
+                  className="input input-bordered w-full bg-gray-50"
                   type="email"
                 />
               </div>
 
-              <div className="modal-action md:col-span-2">
+              <div className="md:col-span-2 flex gap-3 pt-4">
+                <button
+                  type="submit"
+                  className="btn flex-1 bg-lime-500 hover:bg-lime-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  Save Changes
+                </button>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="btn"
+                  className="btn flex-1 btn-outline border-2 border-gray-300 hover:border-lime-500 hover:bg-lime-50"
                 >
                   Cancel
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  Save Changes
                 </button>
               </div>
             </form>
           </div>
+          <form method="dialog" className="modal-backdrop">
+            <button onClick={() => setOpen(false)}>close</button>
+          </form>
         </dialog>
       )}
       {openAssignModal && (
         <dialog open className="modal">
-          <div className="modal-box max-w-2xl">
-            <h3 className="font-bold text-lg mb-4">
-              Assign "{productName}" to Employee
-            </h3>
+          <div className="modal-box max-w-2xl bg-white rounded-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-lime-500 rounded-lg flex items-center justify-center">
+                <FaUserPlus className="text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">
+                Assign "{productName}" to Employee
+              </h3>
+            </div>
 
             {myEmployees.length === 0 ? (
               <p className="text-center text-gray-500 py-8">
@@ -295,13 +411,13 @@ const AllAssetTableRow = ({ asset, refetch }) => {
             ) : (
               <div className="overflow-x-auto">
                 <table className="table table-zebra">
-                  <thead>
+                  <thead className="bg-lime-500 text-white">
                     <tr>
-                      <th>#</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Current Assets</th>
-                      <th>Action</th>
+                      <th className="text-white">#</th>
+                      <th className="text-white">Name</th>
+                      <th className="text-white">Email</th>
+                      <th className="text-white">Current Assets</th>
+                      <th className="text-white">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -333,7 +449,7 @@ const AllAssetTableRow = ({ asset, refetch }) => {
                         <td>
                           <button
                             onClick={() => handleAssignToEmployee(employee)}
-                            className="btn btn-sm btn-primary"
+                            className="btn btn-sm bg-lime-500 hover:bg-lime-600 text-white border-0"
                           >
                             Assign
                           </button>
@@ -345,8 +461,11 @@ const AllAssetTableRow = ({ asset, refetch }) => {
               </div>
             )}
 
-            <div className="modal-action mt-6">
-              <button onClick={() => setOpenAssignModal(false)} className="btn">
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={() => setOpenAssignModal(false)}
+                className="btn btn-outline border-2 border-gray-300 hover:border-lime-500 hover:bg-lime-50"
+              >
                 Close
               </button>
             </div>
