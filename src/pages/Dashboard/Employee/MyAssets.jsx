@@ -263,7 +263,7 @@ const MyAssets = () => {
           </div>
 
           {/* Print Stats */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="text-center p-4 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-600 font-semibold">
                 Total Assets
