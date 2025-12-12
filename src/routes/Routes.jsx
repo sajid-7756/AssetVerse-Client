@@ -18,8 +18,8 @@ import AddAsset from "../pages/Dashboard/HR/AddAsset";
 import AllRequests from "../pages/Dashboard/HR/AllRequests";
 import EmployeeList from "../pages/Dashboard/HR/EmployeeList";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
-import UpgradePackage from "../pages/Dashboard/HR/UpgradePackage";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
+import UpgradePackagePage from "../pages/Dashboard/HR/UpgradePackagePage";
 
 export const router = createBrowserRouter([
   {
@@ -132,7 +132,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <HRRoute>
-              <UpgradePackage />
+              <UpgradePackagePage />
             </HRRoute>
           </PrivateRoute>
         ),

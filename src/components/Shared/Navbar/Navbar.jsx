@@ -11,6 +11,7 @@ import {
   FaClipboardList,
   FaUsers,
   FaPlus,
+  FaUser,
 } from "react-icons/fa";
 
 const Navbar = () => {
@@ -126,6 +127,7 @@ const Navbar = () => {
       ) : null}
       <li>
         <Link to="/dashboard/profile" className="flex items-center gap-2">
+          <FaUser size={16} />
           Profile
         </Link>
       </li>
