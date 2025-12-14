@@ -21,7 +21,7 @@ const AllRequests = () => {
   const [statusFilter, setStatusFilter] = useState("all");
 
   const { data: allRequests = [], refetch } = useQuery({
-    queryKey: ["all-assetRequests"],
+    queryKey: ["all-assetRequests", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/asset-requests/${user?.email}`);
       return res.data;
@@ -203,9 +203,7 @@ const AllRequests = () => {
               <FaClipboardList className="text-white text-xl" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                All Requests
-              </h1>
+              <h1 className="text-3xl font-bold text-gray-900">All Requests</h1>
               <p className="text-gray-600">Manage employee asset requests</p>
             </div>
           </div>
@@ -392,4 +390,3 @@ const AllRequests = () => {
 };
 
 export default AllRequests;
- 

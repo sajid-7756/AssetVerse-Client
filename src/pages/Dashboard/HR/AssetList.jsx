@@ -15,6 +15,7 @@ const AssetList = () => {
       return res.data;
     },
   });
+  
   const [searchTerm, setSearchTerm] = useState("");
   const filteredAsset = allAssets.filter(
     (asset) =>

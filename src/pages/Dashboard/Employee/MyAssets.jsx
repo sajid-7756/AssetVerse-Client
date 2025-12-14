@@ -190,7 +190,7 @@ const MyAssets = () => {
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             e.target.src =
-                              "https://via.placeholder.com/64?text=Asset";
+                              "https://i.ibb.co.com/zWDrGvkn/a7ae73fd-a6cc-463f-91a6-49ed7ed143be.jpg";
                           }}
                         />
                       </div>

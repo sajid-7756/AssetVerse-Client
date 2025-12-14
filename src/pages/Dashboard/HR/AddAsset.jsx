@@ -13,6 +13,7 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const AddAsset = () => {
   const { user } = useAuth();
@@ -23,6 +24,13 @@ const AddAsset = () => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm();
+  const { data: userData = {} } = useQuery({
+    queryKey: ["userData", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user?.email}`);
+      return res.data;
+    },
+  });
 
   const onSubmit = async (data) => {
     try {
@@ -33,7 +41,7 @@ const AddAsset = () => {
 
       const asset = {
         productName: data.productName,
-        companyName: data.companyName,
+        companyName: userData?.companyName,
         productImage: imgURL,
         availableQuantity: parseInt(data.availableQuantity),
         productQuantity: parseInt(data.productQuantity),
@@ -128,13 +136,13 @@ const AddAsset = () => {
               </span>
             </label>
             <input
-              {...register("companyName", {
-                required: "Company name is required",
-              })}
+              {...register("companyName", {})}
               className={`input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all ${
                 errors.companyName ? "border-red-500" : ""
               }`}
               placeholder="Enter company name"
+              value={userData?.companyName}
+              disabled
             />
             {errors.companyName && (
               <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
@@ -307,10 +315,22 @@ const AddAsset = () => {
           Asset Information
         </h3>
         <ul className="text-sm text-gray-700 space-y-1">
-          <li>• <strong>Returnable:</strong> Assets that must be returned when no longer needed</li>
-          <li>• <strong>Non-Returnable:</strong> Assets that are permanently assigned</li>
-          <li>• <strong>Available Quantity:</strong> Number of units currently available for assignment</li>
-          <li>• <strong>Total Quantity:</strong> Total number of units in inventory</li>
+          <li>
+            • <strong>Returnable:</strong> Assets that must be returned when no
+            longer needed
+          </li>
+          <li>
+            • <strong>Non-Returnable:</strong> Assets that are permanently
+            assigned
+          </li>
+          <li>
+            • <strong>Available Quantity:</strong> Number of units currently
+            available for assignment
+          </li>
+          <li>
+            • <strong>Total Quantity:</strong> Total number of units in
+            inventory
+          </li>
         </ul>
       </div>
     </div>
