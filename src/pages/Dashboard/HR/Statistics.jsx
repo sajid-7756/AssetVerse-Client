@@ -39,7 +39,7 @@ const Statistics = ({ isAnimationActive = true }) => {
     },
   });
 
-  const { data: allRequests = [], isLoading: requestsLoading } = useQuery({
+  const { data = {}, isLoading: requestsLoading } = useQuery({
     queryKey: ["all-assetRequests", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -47,6 +47,7 @@ const Statistics = ({ isAnimationActive = true }) => {
       return res.data;
     },
   });
+  const { requests: allRequests = [] } = data;
 
   if (assetsLoading || requestsLoading) return <LoadingSpinner />;
 
@@ -196,7 +197,11 @@ const Statistics = ({ isAnimationActive = true }) => {
                   <YAxis tick={{ fill: "#6b7280" }} allowDecimals={false} />
                   <Tooltip
                     cursor={{ fill: "#f3f4f6" }}
-                    contentStyle={{ borderRadius: "8px", border: "none", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
+                    contentStyle={{
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                    }}
                   />
                   <Bar
                     dataKey="count"

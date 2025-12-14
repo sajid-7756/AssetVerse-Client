@@ -11,6 +11,8 @@ import {
   FaClock,
   FaCheckCircle,
   FaTimesCircle,
+  FaChevronLeft,
+  FaChevronRight,
 } from "react-icons/fa";
 import Swal from "sweetalert2";
 
@@ -19,14 +21,22 @@ const AllRequests = () => {
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-
-  const { data: allRequests = [], refetch } = useQuery({
-    queryKey: ["all-assetRequests", user?.email],
+  const [page, setPage] = useState(1);
+  const { data = {}, refetch } = useQuery({
+    queryKey: ["all-assetRequests", user?.email, page],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/asset-requests/${user?.email}`);
+      const res = await axiosSecure.get(
+        `/asset-requests/${user?.email}?limit=${limit}&skip=${skip}`
+      );
       return res.data;
     },
   });
+
+  const { requests: allRequests = [], total = 0 } = data;
+  const limit = 10;
+  const skip = (page - 1) * limit;
+  const totalPages = Math.ceil(total / limit);
 
   // Filter requests based on search and status
   const filteredRequests = allRequests.filter((request) => {
@@ -384,6 +394,39 @@ const AllRequests = () => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="flex justify-center items-center gap-2 mt-8">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((p) => p - 1)}
+          className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-lime-50 hover:text-lime-600 hover:border-lime-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-white cursor-pointer"
+        >
+          <FaChevronLeft />
+        </button>
+
+        <div className="flex items-center gap-2">
+          {[...Array(totalPages).keys()].map((num) => (
+            <button
+              key={num}
+              onClick={() => setPage(num + 1)}
+              className={`w-10 h-10 flex items-center justify-center rounded-full transition-all text-sm font-medium cursor-pointer ${
+                page === num + 1
+                  ? "bg-lime-500 text-white shadow-md shadow-lime-200"
+                  : "hover:bg-gray-100 text-gray-600 bg-white border border-transparent hover:border-gray-200"
+              }`}
+            >
+              {num + 1}
+            </button>
+          ))}
+        </div>
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage((p) => p + 1)}
+          className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-lime-50 hover:text-lime-600 hover:border-lime-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-white cursor-pointer"
+        >
+          <FaChevronRight />
+        </button>
       </div>
     </div>
   );
