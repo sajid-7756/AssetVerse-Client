@@ -1,23 +1,12 @@
-import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
 
 const AllRequestTableRow = ({ request, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
-  const {
-    approvalDate,
-    assetId,
-    assetName,
-    assetType,
-    companyName,
-    hrEmail,
-    note,
-    processedBy,
-    requestDate,
-    requestStatus,
-    requesterName,
-    _id,
-  } = request;
-  console.log(request);
+
+
+  const { assetId, assetName, requestDate, requestStatus, requesterName } =
+    request;
 
   const handleEmployeeApprove = async (request) => {
     const updateRequest = {

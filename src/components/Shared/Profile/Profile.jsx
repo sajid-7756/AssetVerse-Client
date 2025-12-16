@@ -32,7 +32,7 @@ const Profile = () => {
   const { data: userData = {} } = useQuery({
     queryKey: ["userData", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/${user?.email}`);
+      const res = await axiosSecure.get(`/users`);
       return res.data;
     },
   });
@@ -158,17 +158,6 @@ const Profile = () => {
                 </p>
                 <p className="text-xl font-bold text-gray-900 capitalize">
                   {userData?.subscription || "Basic"}
-                </p>
-              </div>
-
-              <div className="bg-lime-50 rounded-xl p-6 border-2 border-lime-200">
-                <p className="text-sm font-semibold text-gray-600 mb-2 flex items-center gap-2">
-                  <FaUser className="text-lime-600" />
-                  Employee Limit
-                </p>
-                <p className="text-xl font-bold text-gray-900">
-                  {userData?.currentEmployees || 0} /{" "}
-                  {userData?.packageLimit || 5}
                 </p>
               </div>
             </div>
