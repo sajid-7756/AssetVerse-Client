@@ -1,6 +1,7 @@
 import React from "react";
 import { FaStar, FaBuilding, FaUsers, FaChartLine } from "react-icons/fa";
 import Container from "../../Shared/Container";
+import ScrollAnimationWrapper from "../../Shared/ScrollAnimationWrapper";
 
 const Testimonials = () => {
   const testimonials = [
@@ -57,10 +58,10 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="bg-linear-to-br py-16 md:py-24 px-4">
+    <div className="bg-linear-to-br py-16 md:py-24 px-4 overflow-hidden">
       <Container className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <ScrollAnimationWrapper className="text-center mb-12">
           <div className="inline-block px-4 py-2 bg-lime-100 text-lime-700 rounded-full font-bold text-sm mb-4">
             Testimonials
           </div>
@@ -74,13 +75,15 @@ const Testimonials = () => {
             See what our customers have to say about their experience with
             AssetVerse.
           </p>
-        </div>
+        </ScrollAnimationWrapper>
 
         {/* Statistics Bar */}
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {stats.map((stat, index) => (
-            <div
+            <ScrollAnimationWrapper
               key={index}
+              delay={index * 0.15}
+              direction="up"
               className="bg-white hover:shadow-xl transition-all duration-300 hover:border-lime-200 hover:-translate-y-1 rounded-2xl p-8 shadow-lg text-center border border-lime-100"
             >
               <div className="inline-flex p-4 bg-lime-100 rounded-full text-lime-600 mb-4">
@@ -90,15 +93,17 @@ const Testimonials = () => {
                 {stat.value}
               </div>
               <p className="text-gray-600 font-medium">{stat.label}</p>
-            </div>
+            </ScrollAnimationWrapper>
           ))}
         </div>
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div
+            <ScrollAnimationWrapper
               key={index}
+              delay={index * 0.1}
+              scale={0.95}
               className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-lime-200 hover:-translate-y-1"
             >
               {/* Star Rating */}
@@ -134,13 +139,16 @@ const Testimonials = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </ScrollAnimationWrapper>
           ))}
         </div>
 
         {/* Trust Badge */}
         <div className="mt-16 text-center">
-          <div className="flex justify-center items-center gap-2 text-lime-600">
+          <ScrollAnimationWrapper
+            delay={0.5}
+            className="flex justify-center items-center gap-2 text-lime-600"
+          >
             <FaStar className="text-yellow-400" />
             <FaStar className="text-yellow-400" />
             <FaStar className="text-yellow-400" />
@@ -149,7 +157,7 @@ const Testimonials = () => {
             <span className="ml-2 text-gray-700 font-semibold">
               4.9/5 Average Rating
             </span>
-          </div>
+          </ScrollAnimationWrapper>
         </div>
       </Container>
     </div>

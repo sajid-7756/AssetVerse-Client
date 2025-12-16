@@ -19,8 +19,6 @@ const AllAssetTableRow = ({ asset, refetch }) => {
     },
   });
 
-  console.log(myEmployees);
-
   const {
     availableQuantity,
     companyName,

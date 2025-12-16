@@ -16,13 +16,15 @@ import {
 } from "react-icons/fa";
 import Swal from "sweetalert2";
 
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+
 const AllRequests = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
-  const { data = {}, refetch } = useQuery({
+  const { data = {}, refetch, isLoading } = useQuery({
     queryKey: ["all-assetRequests", user?.email, page],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -32,6 +34,8 @@ const AllRequests = () => {
       return res.data;
     },
   });
+
+  if (isLoading) return <LoadingSpinner />;
 
   const { requests: allRequests = [], total = 0 } = data;
   const limit = 10;

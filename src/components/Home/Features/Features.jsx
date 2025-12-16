@@ -8,6 +8,7 @@ import {
   FaMobileAlt,
 } from "react-icons/fa";
 import Container from "../../Shared/Container";
+import ScrollAnimationWrapper from "../../Shared/ScrollAnimationWrapper";
 
 const Features = () => {
   const features = [
@@ -50,10 +51,10 @@ const Features = () => {
   ];
 
   return (
-    <div className="py-16 md:py-24 px-4">
+    <div className="py-16 md:py-24 px-4 overflow-hidden">
       <Container className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="text-center mb-16">
+        <ScrollAnimationWrapper className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-lime-100 text-lime-700 rounded-full font-bold text-sm mb-4">
             Features
           </div>
@@ -67,13 +68,15 @@ const Features = () => {
             Powerful features designed to simplify asset management and boost
             productivity across your organization.
           </p>
-        </div>
+        </ScrollAnimationWrapper>
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div
+            <ScrollAnimationWrapper
               key={index}
+              delay={index * 0.1}
+              scale={0.9}
               className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-lime-200 hover:-translate-y-1 group"
             >
               <div className="mb-4">
@@ -87,7 +90,7 @@ const Features = () => {
               <p className="text-gray-600 leading-relaxed">
                 {feature.description}
               </p>
-            </div>
+            </ScrollAnimationWrapper>
           ))}
         </div>
       </Container>

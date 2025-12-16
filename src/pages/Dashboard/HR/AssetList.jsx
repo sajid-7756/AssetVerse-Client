@@ -4,18 +4,23 @@ import AllAssetTableRow from "../../../components/Dashboard/TableRows/AllAssetTa
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { FaBox, FaSearch, FaCheckCircle } from "react-icons/fa";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const AssetList = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: allAssets = [], refetch } = useQuery({
+  const {
+    data: allAssets = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["all-assets"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/company-assets/${user?.email}`);
       return res.data;
     },
   });
-  
+
   const [searchTerm, setSearchTerm] = useState("");
   const filteredAsset = allAssets.filter(
     (asset) =>
@@ -34,6 +39,8 @@ const AssetList = () => {
     (sum, asset) => sum + asset.availableQuantity,
     0
   );
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="space-y-6">

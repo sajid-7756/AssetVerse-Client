@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import Container from "../../Shared/Container";
 import aboutImg from "../../../assets/about-us.png";
+import ScrollAnimationWrapper from "../../Shared/ScrollAnimationWrapper";
 
 const About = () => {
   const benefits = [
@@ -37,10 +38,10 @@ const About = () => {
   ];
 
   return (
-    <div className="py-16 md:py-24 px-4">
+    <div className="py-16 md:py-24 px-4 overflow-hidden">
       <Container>
         {/* Header Section */}
-        <div className="text-center mb-16">
+        <ScrollAnimationWrapper className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-lime-100 text-lime-700 rounded-full font-bold text-sm mb-4">
             About AssetVerse
           </div>
@@ -55,13 +56,15 @@ const About = () => {
             efficiently, transparently, and securely—bridging the gap between HR
             and employees.
           </p>
-        </div>
+        </ScrollAnimationWrapper>
 
         {/* Benefits Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {benefits.map((benefit, index) => (
-            <div
+            <ScrollAnimationWrapper
               key={index}
+              direction="up"
+              delay={index * 0.1}
               className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-lime-200 hover:-translate-y-1 group"
             >
               <div className="flex items-start gap-4">
@@ -77,21 +80,21 @@ const About = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </ScrollAnimationWrapper>
           ))}
         </div>
 
         {/* Stats and Image Section */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <ScrollAnimationWrapper direction="right">
             <img
               src={aboutImg}
               className="w-full max-w-md rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300"
               alt="AssetVerse Platform"
             />
-          </div>
+          </ScrollAnimationWrapper>
           <div className="space-y-8">
-            <div>
+            <ScrollAnimationWrapper direction="left" delay={0.2}>
               <h3 className="text-3xl font-bold text-gray-900 mb-3">
                 Trusted by Leading Organizations
               </h3>
@@ -100,39 +103,57 @@ const About = () => {
                 AssetVerse to maintain control over their corporate assets while
                 keeping employees informed and engaged.
               </p>
-            </div>
+            </ScrollAnimationWrapper>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-linear-to-br from-lime-50 to-lime-100 rounded-xl p-6 border border-lime-200">
+              <ScrollAnimationWrapper
+                delay={0.3}
+                scale={0.9}
+                className="bg-linear-to-br from-lime-50 to-lime-100 rounded-xl p-6 border border-lime-200"
+              >
                 <div className="text-3xl font-bold text-lime-600 mb-1">
                   10k+
                 </div>
                 <p className="text-sm text-gray-700">Assets Tracked</p>
-              </div>
-              <div className="bg-linear-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+              </ScrollAnimationWrapper>
+              <ScrollAnimationWrapper
+                delay={0.4}
+                scale={0.9}
+                className="bg-linear-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200"
+              >
                 <div className="text-3xl font-bold text-green-600 mb-1">
                   500+
                 </div>
                 <p className="text-sm text-gray-700">Companies Trust Us</p>
-              </div>
-              <div className="bg-linear-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+              </ScrollAnimationWrapper>
+              <ScrollAnimationWrapper
+                delay={0.5}
+                scale={0.9}
+                className="bg-linear-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200"
+              >
                 <div className="text-3xl font-bold text-blue-600 mb-1">
                   99.9%
                 </div>
                 <p className="text-sm text-gray-700">Uptime SLA</p>
-              </div>
-              <div className="bg-linear-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
+              </ScrollAnimationWrapper>
+              <ScrollAnimationWrapper
+                delay={0.6}
+                scale={0.9}
+                className="bg-linear-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200"
+              >
                 <div className="text-3xl font-bold text-purple-600 mb-1">
                   24/7
                 </div>
                 <p className="text-sm text-gray-700">Support Available</p>
-              </div>
+              </ScrollAnimationWrapper>
             </div>
 
-            <button className="btn bg-linear-to-r from-lime-500 to-green-600 hover:from-lime-600 hover:to-green-700 text-white border-0 btn-lg shadow-lg hover:shadow-green-500/30 transition-all duration-300">
-              Start Your Free Trial
-            </button>
+            <ScrollAnimationWrapper delay={0.7} direction="up">
+              <button className="btn bg-linear-to-r from-lime-500 to-green-600 hover:from-lime-600 hover:to-green-700 text-white border-0 btn-lg shadow-lg hover:shadow-green-500/30 transition-all duration-300">
+                Start Your Free Trial
+              </button>
+            </ScrollAnimationWrapper>
           </div>
         </div>
       </Container>
