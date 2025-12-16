@@ -24,7 +24,6 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
     toast.success("Thank you for contacting us! We'll get back to you soon.");
     // Reset form
     setFormData({ name: "", email: "", company: "", message: "" });

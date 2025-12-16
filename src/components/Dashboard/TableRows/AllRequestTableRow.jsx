@@ -1,9 +1,8 @@
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-
+import toast from "react-hot-toast";
 
 const AllRequestTableRow = ({ request, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
-
 
   const { assetId, assetName, requestDate, requestStatus, requesterName } =
     request;
@@ -18,6 +17,7 @@ const AllRequestTableRow = ({ request, index, refetch }) => {
       updateRequest
     );
     console.log(res.data);
+    toast.success("Approved");
     refetch();
   };
 
@@ -31,6 +31,7 @@ const AllRequestTableRow = ({ request, index, refetch }) => {
     );
     refetch();
     console.log(res.data);
+    toast.success("Rejected");
   };
 
   return (

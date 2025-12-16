@@ -39,8 +39,7 @@ const JoinAsHR = () => {
       const ProfileImageURL = await imageUpload(ProfileImageFile);
 
       // Create Firebase User
-      const result = await createUser(data?.email, data?.password);
-      console.log("HR =>", result);
+      await createUser(data?.email, data?.password);
 
       // Update Firebase Profile
       await updateUserProfile(data?.name, ProfileImageURL);

@@ -35,11 +35,9 @@ const JoinAsEmployee = () => {
     try {
       // Upload Image
       const imageURL = await imageUpload(imageFile);
-      console.log(imageURL);
 
       // Create User
-      const result = await createUser(data?.email, data?.password);
-      console.log("Employee =>", result);
+      await createUser(data?.email, data?.password);
 
       // Update User
       await updateUserProfile(data?.name, imageURL);
@@ -54,8 +52,6 @@ const JoinAsEmployee = () => {
       };
 
       await axiosInstance.post("/users", payload);
-
-      console.log("Employee Registered:", payload);
 
       navigate(from, { replace: true });
       toast.success("Employee Signup Successful 🎉");
