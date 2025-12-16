@@ -1,16 +1,74 @@
-# React + Vite
+# AssetVerse - Asset Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AssetVerse is a comprehensive Web Application designed to streamline asset management for businesses. It provides a platform for HR Managers to track company assets and for Employees to request and manage the assets they need.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### For Employees:
+- **Asset Requests:** Easily browse available assets and submit requests.
+- **My Assets:** View list of assigned assets and their status.
+- **Request Tracking:** Track the status of your requests (Pending, Approved, Rejected).
+- **Profile Management:** Update personal details.
 
-## React Compiler
+### For HR Managers:
+- **Dashboard:** Overview of pending requests, limited stock items, and returnable/non-returnable asset charts.
+- **Asset Management:** Add, update, and delete assets. Track inventory levels.
+- **Employee Management:** View all employees and manage their company affiliation.
+- **Request Handling:** Approve or reject asset requests with a single click.
+- **Reports:** Visual analytics of asset distribution and usage.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+**Frontend:**
+- [React](https://react.dev/) - UI Library
+- [Vite](https://vitejs.dev/) - Build Tool
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [DaisyUI](https://daisyui.com/) - Component library for Tailwind
+- [Framer Motion](https://www.framer.com/motion/) - Animation library
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Data & State Management:**
+- [React Query](https://tanstack.com/query/v4) - Server state management
+- [Axios](https://axios-http.com/) - HTTP client
+- [Firebase Auth](https://firebase.google.com/) - Authentication
+
+**Charts:**
+- [Recharts](https://recharts.org/) - Composable charting library
+
+## 📦 Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sajid-7756/AssetVerse-Client
+   cd AssetVerse-Client
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**
+   Create a `.env.local` file in the root directory and add your Firebase configuration:
+   ```env
+   VITE_apiKey=your_api_key
+   VITE_authDomain=your_auth_domain
+   VITE_projectId=your_project_id
+   VITE_storageBucket=your_storage_bucket
+   VITE_messagingSenderId=your_messaging_sender_id
+   VITE_appId=your_app_id
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+## 📜 Scripts
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the app for production.
+- `npm run lint`: Runs ESLint to check for code quality.
+- `npm run preview`: Previews the production build locally.
+
+---
+Built with ❤️ by Sajid !!
