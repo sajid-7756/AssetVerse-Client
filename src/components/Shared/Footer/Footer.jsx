@@ -68,7 +68,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-bold mb-4">Quick Navigation</h4>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -79,28 +79,28 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href="#about"
+                <Link
+                  to="/explore"
                   className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
                 >
-                  About Us
-                </a>
+                  Explore Assets
+                </Link>
               </li>
               <li>
-                <a
-                  href="#features"
+                <Link
+                  to="/blog"
                   className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
                 >
-                  Features
-                </a>
+                  Blog
+                </Link>
               </li>
               <li>
-                <a
-                  href="#pricing"
+                <Link
+                  to="/join-as-hr"
                   className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
                 >
-                  Pricing
-                </a>
+                  Partner with Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -110,35 +110,35 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-4">Resources</h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/support"
                   className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
                 >
-                  Documentation
-                </a>
+                  Support Center
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
-                >
-                  Support
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
+                <Link
+                  to="/privacy-terms"
                   className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
                 >
                   Privacy Policy
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/privacy-terms"
+                  className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
+                >
+                  Terms of Service
+                </Link>
               </li>
               <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
                 >
-                  Terms of Service
+                  Cookie Settings
                 </a>
               </li>
             </ul>
@@ -172,18 +172,18 @@ const Footer = () => {
               © {new Date().getFullYear()} AssetVerse. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
-              <a
-                href="#"
+              <Link
+                to="/privacy-terms"
                 className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
               >
                 Privacy
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/privacy-terms"
                 className="text-gray-400 hover:text-lime-400 transition-colors duration-300"
               >
                 Terms
-              </a>
+              </Link>
               <a
                 href="#"
                 className="text-gray-400 hover:text-lime-400 transition-colors duration-300"

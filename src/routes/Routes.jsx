@@ -20,6 +20,11 @@ import EmployeeList from "../pages/Dashboard/HR/EmployeeList";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import UpgradePackagePage from "../pages/Dashboard/HR/UpgradePackagePage";
+import Explore from "../pages/Explore/Explore";
+import AssetDetails from "../pages/Explore/AssetDetails";
+import Blog from "../pages/Blog/Blog";
+import Support from "../pages/Support/Support";
+import PrivacyTerms from "../pages/PrivacyTerms/PrivacyTerms";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +45,11 @@ export const router = createBrowserRouter([
         element: <JoinAsHR />,
       },
       { path: "/login", element: <Login /> },
+      { path: "/explore", element: <Explore /> },
+      { path: "/explore/:id", element: <AssetDetails /> },
+      { path: "/blog", element: <Blog /> },
+      { path: "/support", element: <Support /> },
+      { path: "/privacy-terms", element: <PrivacyTerms /> },
     ],
   },
 

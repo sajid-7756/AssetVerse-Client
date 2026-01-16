@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 
 const Login = () => {
-  const { signIn, user } = useAuth();
+  const { signIn, user, googleSignIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -157,7 +157,7 @@ const Login = () => {
               <div className="form-control">
                 <label className="label">
                   <span className="label-text font-semibold text-gray-700 flex items-center gap-2">
-                    <FaEnvelope className="text-lime-500" />
+                    <FaEnvelope className="text-lime-600" />
                     Email Address
                   </span>
                 </label>
@@ -167,7 +167,7 @@ const Login = () => {
                   id="email"
                   required
                   placeholder="your@email.com"
-                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all"
+                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all h-12 rounded-xl"
                 />
               </div>
 
@@ -175,7 +175,7 @@ const Login = () => {
               <div className="form-control">
                 <label className="label">
                   <span className="label-text font-semibold text-gray-700 flex items-center gap-2">
-                    <FaLock className="text-lime-500" />
+                    <FaLock className="text-lime-600" />
                     Password
                   </span>
                 </label>
@@ -186,37 +186,80 @@ const Login = () => {
                   id="password"
                   required
                   placeholder="Enter your password"
-                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all"
+                  className="input input-bordered w-full focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-200 transition-all h-12 rounded-xl"
                 />
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="btn w-full bg-linear-to-r from-lime-500 to-green-600 hover:from-lime-600 hover:to-green-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-lg font-semibold"
+                className="btn w-full bg-lime-500 hover:bg-lime-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-lg font-bold h-12 rounded-xl"
               >
                 Sign In
               </button>
             </form>
 
+            {/* Demo Login Buttons */}
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => {
+                  const form = document.querySelector('form');
+                  form.email.value = "hr@assetverse.com";
+                  form.password.value = "123456";
+                  form.requestSubmit();
+                }}
+                className="btn btn-outline btn-sm flex-1 border-lime-500 text-lime-600 hover:bg-lime-500 hover:text-white rounded-xl h-10 font-bold"
+              >
+                Demo HR
+              </button>
+              <button
+                onClick={() => {
+                  const form = document.querySelector('form');
+                  form.email.value = "employee@assetverse.com";
+                  form.password.value = "123456";
+                  form.requestSubmit();
+                }}
+                className="btn btn-outline btn-sm flex-1 border-green-500 text-green-600 hover:bg-green-500 hover:text-white rounded-xl h-10 font-bold"
+              >
+                Demo Employee
+              </button>
+            </div>
+
             {/* Divider */}
-            <div className="divider my-6 text-gray-500">OR</div>
+            <div className="divider my-6 text-gray-400 font-medium">OR CONTINUE WITH</div>
+
+            {/* Social Login */}
+            <button
+              onClick={async () => {
+                try {
+                  await googleSignIn();
+                  navigate(from, { replace: true });
+                  toast.success("Login Successful");
+                } catch (err) {
+                  toast.error(err?.message);
+                }
+              }}
+              className="btn btn-outline w-full h-12 rounded-xl flex items-center justify-center gap-3 border-base-300 hover:bg-base-200 hover:text-base-content font-bold mb-6"
+            >
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+              Sign in with Google
+            </button>
 
             {/* Register Links */}
             <div className="space-y-3">
-              <p className="text-center text-gray-600 text-sm">
+              <p className="text-center text-gray-600 text-sm font-medium">
                 Don't have an account?
               </p>
               <div className="grid grid-cols-2 gap-3">
                 <Link
                   to="/join-as-hr"
-                  className="btn btn-outline border-2 border-lime-500 text-lime-600 hover:bg-lime-500 hover:text-white hover:border-lime-500 text-sm"
+                  className="btn btn-outline border-lime-500 text-lime-600 hover:bg-lime-500 hover:text-white rounded-xl text-xs font-bold"
                 >
                   Join as HR
                 </Link>
                 <Link
                   to="/join-as-employee"
-                  className="btn btn-outline border-2 border-green-500 text-green-600 hover:bg-green-500 hover:text-white hover:border-green-500 text-sm"
+                  className="btn btn-outline border-green-500 text-green-600 hover:bg-green-500 hover:text-white rounded-xl text-xs font-bold"
                 >
                   Join as Employee
                 </Link>

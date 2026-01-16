@@ -4,15 +4,15 @@ import useAuth from "../hooks/useAuth";
 import LoadingSpinner from "../components/Shared/LoadingSpinner";
 import {
   FaBox,
+  FaHome,
+  FaUser,
+  FaSignOutAlt,
   FaUsers,
   FaClipboardList,
   FaPlusCircle,
-  FaUser,
-  FaArrowUp,
-  FaHome,
-  FaBars,
-  FaSignOutAlt,
   FaChartBar,
+  FaArrowUp,
+  FaBars,
 } from "react-icons/fa";
 import { MdOutlineRequestPage } from "react-icons/md";
 import { AiOutlineTeam } from "react-icons/ai";

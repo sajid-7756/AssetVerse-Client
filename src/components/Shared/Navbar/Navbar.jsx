@@ -37,6 +37,24 @@ const Navbar = () => {
           Home
         </Link>
       </li>
+      <li>
+        <Link
+          to="/explore"
+          className="flex items-center gap-2 hover:text-lime-500"
+        >
+          <FaClipboardList size={16} />
+          Explore
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/blog"
+          className="flex items-center gap-2 hover:text-lime-500"
+        >
+          <FaUser size={16} />
+          Blog
+        </Link>
+      </li>
       {!user ? (
         <>
           <li>
@@ -146,7 +164,7 @@ const Navbar = () => {
       <li>
         <button
           onClick={logOut}
-          className="flex items-center gap-2 text-red-600 hover:text-red-700"
+          className="flex items-center gap-2 text-red-600 hover:text-red-700 font-bold"
         >
           <FaSignOutAlt size={16} />
           Logout
