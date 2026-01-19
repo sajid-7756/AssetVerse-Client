@@ -39,15 +39,6 @@ const Navbar = () => {
       </li>
       <li>
         <Link
-          to="/explore"
-          className="flex items-center gap-2 hover:text-lime-500"
-        >
-          <FaClipboardList size={16} />
-          Explore
-        </Link>
-      </li>
-      <li>
-        <Link
           to="/blog"
           className="flex items-center gap-2 hover:text-lime-500"
         >
