@@ -15,6 +15,7 @@ AssetVerse is a comprehensive Web Application designed to streamline asset manag
 - **Asset Management:** Add, update, and delete assets. Track inventory levels.
 - **Employee Management:** View all employees and manage their company affiliation.
 - **Request Handling:** Approve or reject asset requests with a single click.
+- **Payments & Limits:** When an employee’s assigned asset limit is reached, HR must complete a Stripe payment to extend the limit before assigning more assets.
 - **Reports:** Visual analytics of asset distribution and usage.
 
 ## 🛠️ Tech Stack
